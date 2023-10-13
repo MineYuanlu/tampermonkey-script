@@ -1,0 +1,21 @@
+{
+    "name": "tampermonkey-script",
+    "version": "1.0.0",
+    "description": "油猴脚本",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/MineYuanlu/tampermonkey-script"
+    },
+    "keywords": [
+        "tampkermonkey",
+        "script",
+        "javascript"
+    ],
+    "author": "yuanlu",
+    "license": "AGPL-3.0",
+    "devDependencies": {
+        "prettier": "^3.0.3",
+        "@types/tampermonkey": "^4.20.3"
+    }
+}
