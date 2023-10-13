@@ -1,20 +1,16 @@
 // ==UserScript==
-// @name         平安毓秀
-// @namespace    bid.yuanlu
-// @version      1.0
-// @description  自动完成平安毓秀学习（打开课程列表，全自动完成）
-// @author       yuanlu
-// @match        http*://*.mycourse.cn/*
-// @icon         https://www.google.com/s2/favicons?domain=mycourse.cn
-// @grant        none
-// @require      https://code.jquery.com/jquery-latest.js
+// @name          平安毓秀
+// @namespace     bid.yuanlu
+// @version       1.0.20231013.1858457
+// @description   自动完成平安毓秀学习（打开课程列表，全自动完成）
+// @author        yuanlu
+// @grant         none
+// @icon          https://www.google.com/s2/favicons?domain=mycourse.cn
+// @match         http*://*.mycourse.cn/*
 // ==/UserScript==
 
-// https://weiban.mycourse.cn/
 
-(function () {
-    'use strict';
-
+(() => {
     /**是否运行流程? (正在运行时不再重复触发) */
     let running = false;
 
@@ -93,3 +89,4 @@
         });
     }, 1000);
 })();
+
