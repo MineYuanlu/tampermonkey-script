@@ -50,9 +50,9 @@ class Require:
                  *urls,
                  jquery=False,
                  ):
-        req = []
+        req: "list[str]" = []
         if jquery:
-            req.append['https://code.jquery.com/jquery-latest.js']
+            req.append('https://code.jquery.com/jquery-latest.js')
 
         req.extend(urls)
 
