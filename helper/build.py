@@ -152,8 +152,8 @@ def build_readme(dir_name: str, script: "TamperScript", dst_dir: str, src_dir: s
         desc = bi.get_info("@description", locale)
         author = bi.get_info("@author", locale)
         v = script.get_version()
-        auto_1 = f"# {name}  \n> {ns}\n> author: {author}\n> version: {v}\n\n__{desc}__\n"
-        append = f"\n{append}" if append else ""
+        auto_1 = f"# {name}  \n> {ns}  \n> author: {author}  \n> version: {v}\n\n__{desc}__  "
+        append = f"\n\n{append}" if append else ""
         auto_2 = ("\n\n# Require\n"+"\n".join([f"{i+1}. {r}  " for i, r in enumerate(require.require)])+"\n") \
             if require and len(require.require) else ""
         auto_3 = f"\n\n# Link\n"
