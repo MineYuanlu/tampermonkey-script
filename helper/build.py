@@ -23,14 +23,17 @@ class TamperScript:
                       else line[:-1] if line.endswith('\n')
                       else line
                       for line in self.lines]
-        a = 1
+        start = next((i for i, s in enumerate(self.lines) if s), 0)
+        end = len(self.lines) - next((i for i, s in enumerate(reversed(self.lines)) if s), 0)
+        self.lines = self.lines[start:end]
+        self.lines = ["", ""] + self.lines
 
     def save(self, path: str):
         """保存脚本数据"""
         with open(path, 'w+') as f:
             f.write('// ==UserScript==\n')
             f.writelines([f"// {k}{' '*max(1,15-len(k))}{v}\n"for k, v in self.desc])
-            f.write('// ==/UserScript==\n\n\n')
+            f.write('// ==/UserScript==\n')
             f.writelines([f"{line}\n"for line in self.lines])
 
     def get_version(self):
@@ -135,10 +138,10 @@ def build_single(name: str, path: str,
     new_file.set_version(new_version)
     new_file.save(dst_script)
 
-    build_readme(new_file, dst_dir, path, build_info, require)
+    build_readme(name, new_file, dst_dir, path, build_info, require)
 
 
-def build_readme(script: "TamperScript", dst_dir: str, src_dir: str,
+def build_readme(dir_name: str, script: "TamperScript", dst_dir: str, src_dir: str,
                  bi: BuildInfo, require: Require):
     """构建README文件"""
     prefix, suffix = "readme", ".md"
@@ -149,10 +152,15 @@ def build_readme(script: "TamperScript", dst_dir: str, src_dir: str,
         desc = bi.get_info("@description", locale)
         author = bi.get_info("@author", locale)
         v = script.get_version()
-        auto = f"# {name}  \n> {ns}\n> author: {author}\n> version: {v}\n\n__{desc}__\n"
+        auto_1 = f"# {name}  \n> {ns}\n> author: {author}\n> version: {v}\n\n__{desc}__\n"
         append = f"\n{append}" if append else ""
+        auto_2 = ("\n\n# Require\n"+"\n".join([f"{i+1}. {r}  " for i, r in enumerate(require.require)])+"\n") \
+            if require and len(require.require) else ""
+        auto_3 = f"\n\n# Link\n"
+        auto_4 = f"- [GitHub](https://github.com/MineYuanlu/tampermonkey-script/tree/master/src/{dir_name})  \n"
+        auto_5 = f"- [Greasyfork](https://greasyfork.org/zh-CN/users/886387-mineyuanlu)  \n"
         with open(os.path.join(dst_dir, filename), "w+") as f:
-            f.writelines([auto, append])
+            f.writelines([auto_1, append, auto_2, auto_3, auto_4, auto_5])
 
     no_readme = True
     for filename in os.listdir(src_dir):
@@ -242,7 +250,7 @@ def summon_js(src_script: str, build_info: BuildInfo, require: Require):
     ts = parse_js(src)
     if require:
         for req in require.require:
-            ts.desc.append('@require', req)
+            ts.desc.append(('@require', req))
 
     ts.desc.sort(key=lambda x: f"{x[0]}{' '*max(1,15-len(x[0]))}{x[1]}\n")
 

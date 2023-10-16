@@ -15,6 +15,7 @@
     "author": "yuanlu",
     "license": "AGPL-3.0",
     "devDependencies": {
+        "@types/jquery": "^3.5.22",
         "@types/tampermonkey": "^4.20.3",
         "prettier": "^3.0.3",
         "typescript": "^5.2.2"

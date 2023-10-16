@@ -3,7 +3,7 @@ import os
 
 repo = git.Repo(os.path.dirname(os.path.dirname(__file__)))
 
-lst_commit: git.Commit = repo.active_branch.commit.parents[0]
+lst_commit: git.Commit = repo.active_branch.commit
 
 
 def get_lst_file(path):
