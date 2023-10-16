@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          平安毓秀
 // @namespace     bid.yuanlu
-// @version       1.0.20231016.1058578
+// @version       1.1.20231016.1158212
 // @description   自动完成平安毓秀学习（打开课程列表，全自动完成）
 // @author        yuanlu
 // @grant         none
