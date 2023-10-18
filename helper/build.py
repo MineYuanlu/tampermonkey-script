@@ -8,6 +8,7 @@ import shutil
 try:
     root_dir = os.path.dirname(os.path.dirname(__file__))
     src_dir = os.path.join(root_dir, "src")
+    build_dir = os.path.join(root_dir, "build")
     sys.path.append(root_dir)
     from helper.defs import *
     from helper.git_manager import get_lst_file
@@ -72,8 +73,8 @@ def load_module_info_file(info, *Types):
     """加载模块的信息文件"""
     info = info[0], os.path.join(info[1], 'info.py')
     module_spec = importlib.util.spec_from_file_location(*info)
-    if module_spec is None:
-        raise f"[info_file] [{info[0]}] 无法找到 {info[1]}"
+    if not os.path.exists(info[1]) or module_spec is None:
+        raise Exception(f"[info_file] [{info[0]}] 无法找到 {info[1]}")
     module = importlib.util.module_from_spec(module_spec)
     module_spec.loader.exec_module(module)
     Values = [None] * len(Types)
@@ -121,9 +122,7 @@ def build_single(name: str, path: str,
     else:
         error("找不到脚本文件")
 
-    dst_dir = os.path.join(root_dir, "build", name)
-    if os.path.exists(dst_dir):
-        shutil.rmtree(dst_dir)
+    dst_dir = os.path.join(build_dir, name)
     os.makedirs(dst_dir)
     dst_script = os.path.join(dst_dir, "index.js")
     if src_script.endswith(".ts"):
@@ -273,6 +272,8 @@ def ts2js(in_file, out_file):
     cmds = [
         "npx tsc",
         f'"{in_file}"',
+        "--target es2018",
+        "--lib es2018,DOM",
         "--outfile",
         f'"{out_file}"',
     ]
@@ -280,7 +281,29 @@ def ts2js(in_file, out_file):
     os.system(cmd)
 
 
+def conf_hooks():
+    src = os.path.join(root_dir, "helper", "pre-commit.bash")
+    dst = os.path.join(root_dir, ".git", "hooks", "pre-commit")
+    id = "AUTO RUN BUILD.PY HOOK"
+    if os.path.exists(dst):
+        with open(dst, "r") as f:
+            if id in f.read():
+                return
+    else:
+        os.makedirs(os.path.dirname(dst))
+        with open(dst, 'w+') as f:
+            f.write("#!/bin/bash\n")
+    with open(src, "r") as srcf:
+        with open(dst, "a") as dstf:
+            dstf.write(f"# ==== {id} ====\n")
+            dstf.write(srcf.read())
+            dstf.write(f"# ==== {id} ====\n")
+
+
 if __name__ == "__main__":
-    mis = get_infos()
-    for mi in mis:
+    conf_hooks()
+    if os.path.exists(build_dir):
+        shutil.rmtree(build_dir)
+    os.makedirs(build_dir)
+    for mi in get_infos():
         build_single(*mi)

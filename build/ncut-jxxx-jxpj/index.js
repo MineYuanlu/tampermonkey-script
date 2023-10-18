@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          NCUT 教学评价
 // @namespace     bid.yuanlu
-// @version       1.0.20231016.1058578
+// @version       1.0.20231018.1621225
 // @description   自动进行教学评价
 // @author        yuanlu
 // @grant         none
@@ -17,18 +17,18 @@
 
 (function () {
     'use strict';
-    var $ = window.jQuery;
-    var id = 'yuanlu_ncut_jxpj_loaded';
-    if ($("#".concat(id)).length)
+    const $ = window.jQuery;
+    const id = 'yuanlu_ncut_jxpj_loaded';
+    if ($(`#${id}`).length)
         return;
-    $('body').append("<div id=\"".concat(id, "\" />")); //标识
+    $('body').append(`<div id="${id}" />`); //标识
     function getSelecter() {
         return document.getElementsByName('kcxuanze')[0];
     }
-    var autoSelect = function () {
-        var list = $('option');
-        for (var i = 0; i < list.length; i++) {
-            var ele = list[i];
+    const autoSelect = function () {
+        const list = $('option');
+        for (let i = 0; i < list.length; i++) {
+            let ele = list[i];
             if (ele.value === 'all')
                 continue;
             if (ele.text.indexOf('(未评)') < 0)
@@ -46,9 +46,9 @@
     if (getSelecter().selectedOptions[0].text.indexOf('(未评)') < 0)
         autoSelect();
     $('body').prepend('教学评价自动填充已加载 - yuanlu.');
-    var allOption = $('input[value=E]');
+    const allOption = $('input[value=E]');
     if (!allOption.length)
         return;
-    setTimeout(function () { return allOption.click(); }, 500); //自动选择"完全赞同"
-    $('#submit01').click(function () { return setTimeout(autoSelect, 500); });
+    setTimeout(() => allOption.click(), 500); //自动选择"完全赞同"
+    $('#submit01').click(() => setTimeout(autoSelect, 500));
 })();
