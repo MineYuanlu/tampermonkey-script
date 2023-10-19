@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          NCUT 教学评价
 // @namespace     bid.yuanlu
-// @version       1.0.20231018.1621225
+// @version       1.0.20231019.1129589
 // @description   自动进行教学评价
 // @author        yuanlu
 // @grant         none

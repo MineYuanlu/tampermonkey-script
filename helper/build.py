@@ -124,7 +124,7 @@ def build_single(name: str, path: str,
 
     dst_dir = os.path.join(build_dir, name)
     os.makedirs(dst_dir)
-    dst_script = os.path.join(dst_dir, "index.js")
+    dst_script = os.path.join(dst_dir, f"{name}.user.js")
     if src_script.endswith(".ts"):
         ts2js(src_script, dst_script)
         src_script = dst_script
