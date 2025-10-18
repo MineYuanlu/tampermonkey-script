@@ -92,7 +92,7 @@
         running = window.location.href.includes('#/courses/exam-page?');
     }
 
-    const funcs = [auto_stop, auto_finish, auto_go, auto_back()];
+    const funcs = [auto_stop, auto_finish, auto_go, auto_back];
     const timer = setInterval(() => {
         funcs.forEach((f) => {
             if (!running) f();
