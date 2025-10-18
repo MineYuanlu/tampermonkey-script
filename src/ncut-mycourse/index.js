@@ -70,12 +70,25 @@
             }
         }, 1500);
     }
+    function auto_back() {
+        if (!window.location.hash.startsWith('#/wk/comment?')) return;
+        const btns = document.querySelectorAll('button.comment-footer-button');
+        console.log('按钮组:', btns);
+        if (btns.length > 0) running = true;
+        for (let i = 0; i < btns.length; i++) {
+            if (btns[i].innerHTML.includes('返回列表')) {
+                console.log('找到按钮:', btns[i]);
+                btns[i].click();
+                break;
+            }
+        }
+    }
     /**考试页面自动停止 */
     function auto_stop() {
         running = window.location.href.includes('#/courses/exam-page?');
     }
 
-    const funcs = [auto_stop, auto_finish, auto_go];
+    const funcs = [auto_stop, auto_finish, auto_go, auto_back()];
     const timer = setInterval(() => {
         funcs.forEach((f) => {
             if (!running) f();
