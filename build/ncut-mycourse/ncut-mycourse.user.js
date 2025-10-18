@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          平安毓秀
 // @namespace     bid.yuanlu
-// @version       1.1.20251018.1339169
+// @version       1.1.20251018.1347170
 // @description   自动完成平安毓秀学习（打开课程列表，全自动完成）
 // @author        yuanlu
 // @grant         none
@@ -53,6 +53,11 @@
             j = 0,
             k = false;
         const inter = setInterval(() => {
+            if (!window.location.hash.startsWith('#/course?')) {
+                clearInterval(inter);
+                running = false;
+                return;
+            }
             k = !k;
             if (k) {
                 const nopass = document.querySelectorAll('#app .img-texts-item.van-hairline--top:not(.passed)');
