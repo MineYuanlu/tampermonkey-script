@@ -78,17 +78,21 @@
         for (let i = 0; i < btns.length; i++) {
             if (btns[i].innerHTML.includes('返回列表')) {
                 console.log('找到按钮:', btns[i]);
+                setTimeout(() => {
+                    running = false;
+                }, 1000);
                 btns[i].click();
-                break;
+                return;
             }
         }
+        console.warn('无法找到正确的返回按钮!');
     }
     /**考试页面自动停止 */
     function auto_stop() {
         running = window.location.href.includes('#/courses/exam-page?');
     }
 
-    const funcs = [auto_stop, auto_finish, auto_go, auto_back()];
+    const funcs = [auto_stop, auto_finish, auto_go, auto_back];
     const timer = setInterval(() => {
         funcs.forEach((f) => {
             if (!running) f();
