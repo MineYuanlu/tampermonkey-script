@@ -46,6 +46,11 @@
             j = 0,
             k = false;
         const inter = setInterval(() => {
+            if (!window.location.hash.startsWith('#/course?')) {
+                clearInterval(inter);
+                running = false;
+                return;
+            }
             k = !k;
             if (k) {
                 const nopass = document.querySelectorAll('#app .img-texts-item.van-hairline--top:not(.passed)');
