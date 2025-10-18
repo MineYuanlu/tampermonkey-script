@@ -4,9 +4,7 @@
         "editor.defaultFormatter": "ms-python.autopep8"
     },
     "python.formatting.provider": "none",
-    "autopep8.args": [
-        "--max-line-length",
-        "120",
-        "--experimental"
-    ]
+    "autopep8.args": ["--max-line-length", "120", "--experimental"],
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": []
 }

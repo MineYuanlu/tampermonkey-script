@@ -290,7 +290,7 @@ def conf_hooks():
             if id in f.read():
                 return
     else:
-        os.makedirs(os.path.dirname(dst))
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
         with open(dst, 'w+') as f:
             f.write("#!/bin/bash\n")
     with open(src, "r") as srcf:
