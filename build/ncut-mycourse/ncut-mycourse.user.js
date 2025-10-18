@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          平安毓秀
 // @namespace     bid.yuanlu
-// @version       1.1.20251018.1327242
+// @version       1.1.20251018.1334085
 // @description   自动完成平安毓秀学习（打开课程列表，全自动完成）
 // @author        yuanlu
 // @grant         none
@@ -85,10 +85,14 @@
         for (let i = 0; i < btns.length; i++) {
             if (btns[i].innerHTML.includes('返回列表')) {
                 console.log('找到按钮:', btns[i]);
+                setTimeout(() => {
+                    running = false;
+                }, 1000);
                 btns[i].click();
-                break;
+                return;
             }
         }
+        console.warn('无法找到正确的返回按钮!');
     }
     /**考试页面自动停止 */
     function auto_stop() {
